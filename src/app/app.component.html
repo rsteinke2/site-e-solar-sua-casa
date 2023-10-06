@@ -1,0 +1,581 @@
+<style>
+  :host {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: 14px;
+    color: #333;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 8px 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    background-color: #1976d2;
+    color: yellow;
+    font-weight: 620;
+  }
+
+  .toolbar img {
+    margin: 0 30px;
+  }
+
+  .content {
+    display: flex;
+    margin: 30px auto 35px;
+    padding: 0 16px;
+    max-width: 1000px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  svg.material-icons {
+    height: 24px;
+    width: auto;
+  }
+
+  svg.material-icons:not(:last-child) {
+    margin-right: 8px;
+  }
+
+  .card svg.material-icons path {
+    fill: #888;
+  }
+
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 100px;
+  }
+
+  .card {
+    all: unset;
+    border-radius: 4px;
+    border: 1px solid #9d9da0;
+    background-color: #fafafa;
+    height: 80px;
+    width: 250px;
+    margin: 0 8px 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    line-height: 24px;
+  }
+
+  .card-container .card:not(:last-child) {
+    margin-right: 0;
+  }
+
+  .card.card-small {
+    height: 16px;
+    width: 168px;
+  }
+
+  .card-container .card:not(.highlight-card) {
+    cursor: pointer;
+  }
+
+  .card-container .card:not(.highlight-card):hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+  }
+
+  .card-container .card:not(.highlight-card):hover .material-icons path {
+    fill: rgb(105, 103, 103);
+  }
+
+  .card.highlight-card {
+    background-color: #1976d2;
+    color: white;
+    font-weight: 600;
+    border: none;
+    width: auto;
+    min-width: 30%;
+    position: relative;
+  }
+
+  .card.card.highlight-card span {
+    margin-left: 60px;
+  }
+
+  svg#rocket {
+    width: 80px;
+    position: absolute;
+    left: -10px;
+    top: -24px;
+  }
+
+  svg#rocket-smoke {
+    height: calc(100vh - 95px);
+    position: absolute;
+    top: 10px;
+    right: 180px;
+    z-index: -10;
+  }
+
+  a,
+  a:visited,
+  a:hover {
+    color: #1976d2;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: #125699;
+  }
+
+  .terminal {
+    position: relative;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 6px;
+    padding-top: 45px;
+    margin-top: 8px;
+    overflow: hidden;
+    background-color: rgb(15, 15, 16);
+  }
+
+  .terminal::before {
+    content: "\2022 \2022 \2022";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: rgb(58, 58, 58);
+    color: #c2c3c4;
+    width: 100%;
+    font-size: 2rem;
+    line-height: 0;
+    padding: 14px 0;
+    text-indent: 4px;
+  }
+
+  .terminal pre {
+    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+    color: white;
+    padding: 0 1rem 1rem;
+    margin: 0;
+  }
+
+  .circle-link {
+    height: 40px;
+    width: 40px;
+    border-radius: 40px;
+    margin: 8px;
+    background-color: white;
+    border: 1px solid #eeeeee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: 1s ease-out;
+  }
+
+  .circle-link:hover {
+    transform: translateY(-0.25rem);
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  footer {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    line-height: 20px;
+  }
+
+  footer a {
+    display: flex;
+    align-items: center;
+  }
+
+  .github-star-badge {
+    color: #24292e;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    padding: 3px 10px;
+    border: 1px solid rgba(27,31,35,.2);
+    border-radius: 3px;
+    background-image: linear-gradient(-180deg,#fafbfc,#eff3f6 90%);
+    margin-left: 4px;
+    font-weight: 600;
+  }
+
+  .github-star-badge:hover {
+    background-image: linear-gradient(-180deg,#f0f3f6,#e6ebf1 90%);
+    border-color: rgba(27,31,35,.35);
+    background-position: -.5em;
+  }
+
+  .github-star-badge .material-icons {
+    height: 16px;
+    width: 16px;
+    margin-right: 4px;
+  }
+
+  svg#clouds {
+    position: fixed;
+    bottom: -160px;
+    left: -230px;
+    z-index: -10;
+    width: 1920px;
+  }
+
+  .nav {
+
+  margin-top: 120px;
+  padding-top: 0px;
+  }
+
+  .info-box {
+    border: 1px solid #ccc;
+    padding: 10px; 
+    background-color: #f9f9f9; 
+    margin-bottom: 10px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+
+  .centered-textarea {
+    width: 55%;
+    margin-left: auto; 
+    margin-right: auto; 
+    display: block; 
+    resize: none;
+    border: none;
+    outline: none; 
+    padding: 0; 
+    margin: 50; 
+    text-align: justify; 
+}
+  .noticia {
+    background-color: #f5f5f5;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin: 10px;
+}
+
+.noticia h2 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.noticia a {
+    text-decoration: none;
+    color: #333;
+}
+
+.noticia p {
+    margin: 5px 0;
+}
+
+.titulo-link {
+    text-decoration: underline; 
+    color: #0077cc;
+    transition: color 0.3s ease; 
+}
+
+.titulo-link:hover {
+    color: #ff5500; 
+}
+
+  @media screen and (max-width: 767px) {
+    .card-container > *:not(.circle-link) ,
+    .terminal {
+      width: 100%;
+    }
+
+    .card:not(.highlight-card) {
+      height: 16px;
+      margin: 8px 0;
+    }
+
+    .card.highlight-card span {
+      margin-left: 72px;
+    }
+
+    svg#rocket-smoke {
+      right: 120px;
+      transform: rotate(-5deg);
+    }
+  }
+
+  @media screen and (max-width: 575px) {
+    svg#rocket-smoke {
+      display: none;
+      visibility: hidden;
+    }
+  }
+
+  @media (max-width: 768px) {
+  img {
+    top: 5%;
+    left: 50%;
+  }
+}
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+  img {
+    top: 10%;
+    left: 70%;
+  }
+}
+</style>
+<!-- estrutura do site  autor nome: Ricardo Steinke RU 3960590-->
+<body>
+  <div class="toolbar">
+    <div class="content">
+      <h1>&#x263C; Energia Solar em sua Casa  &#8962;</h1>
+      <p>Site de informações úteis sobre Energia Solar, Geração Distribuida para comunidades de baixa renda</p>
+    </div>
+  </div>
+     <div class="mt-5">
+      <!-- botões de navegaçãos das abas do site junto com o ícone de cada um -->
+       <nav>
+         <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          
+           <button class="nav-link active" id="nav-a1-tab" data-bs-toggle="tab" data-bs-target="#nav-a1" type="button" role="tab" aria-controls="nav-a1" aria-selected="true">
+            <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512"><path d="M122.2 0C91.7 0 65.5 21.5 59.5 51.4L8.3 307.4C.4 347 30.6 384 71 384H288v64H224c-17.7 0-32 14.3-32 32s14.3 32 32 32H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H352V384H569c40.4 0 70.7-36.9 62.8-76.6l-51.2-256C574.5 21.5 548.3 0 517.8 0H122.2zM260.9 64H379.1l10.4 104h-139L260.9 64zM202.3 168H101.4L122.2 64h90.4L202.3 168zM91.8 216H197.5L187.1 320H71L91.8 216zm153.9 0H394.3l10.4 104-169.4 0 10.4-104zm196.8 0H548.2L569 320h-116L442.5 216zm96-48H437.7L427.3 64h90.4l31.4-6.3L517.8 64l20.8 104z"/></svg>
+            <span>Energia Solar e Benefícios</span>
+           </button>
+           <button class="nav-link" id="nav-a2-tab" data-bs-toggle="tab" data-bs-target="#nav-a2" type="button" role="tab" aria-controls="nav-a2" aria-selected="false">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512"><path d="M96 0C78.3 0 64 14.3 64 32v96h64V32c0-17.7-14.3-32-32-32zM288 0c-17.7 0-32 14.3-32 32v96h64V32c0-17.7-14.3-32-32-32zM32 160c-17.7 0-32 14.3-32 32s14.3 32 32 32v32c0 77.4 55 142 128 156.8V480c0 17.7 14.3 32 32 32s32-14.3 32-32V412.8C297 398 352 333.4 352 256V224c17.7 0 32-14.3 32-32s-14.3-32-32-32H32z"/></svg>
+            <span> Geração Distribuida de Energia</span>
+           </button>
+           <button class="nav-link" id="nav-a3-tab" data-bs-toggle="tab" data-bs-target="#nav-a3" type="button" role="tab" aria-controls="nav-a3" aria-selected="false">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512"><path d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H64zM96 64H288c17.7 0 32 14.3 32 32v32c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V96c0-17.7 14.3-32 32-32zm32 160a32 32 0 1 1 -64 0 32 32 0 1 1 64 0zM96 352a32 32 0 1 1 0-64 32 32 0 1 1 0 64zM64 416c0-17.7 14.3-32 32-32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H96c-17.7 0-32-14.3-32-32zM192 256a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm32 64a32 32 0 1 1 -64 0 32 32 0 1 1 64 0zm64-64a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm32 64a32 32 0 1 1 -64 0 32 32 0 1 1 64 0zM288 448a32 32 0 1 1 0-64 32 32 0 1 1 0 64z"/></svg>
+            <span> Cálculo do Sistema Solar</span>
+            </button>
+           <button class="nav-link" id="nav-a4-tab" data-bs-toggle="tab" data-bs-target="#nav-a4" type="button" role="tab" aria-controls="nav-a4" aria-selected="false">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M78.6 5C69.1-2.4 55.6-1.5 47 7L7 47c-8.5 8.5-9.4 22-2.1 31.6l80 104c4.5 5.9 11.6 9.4 19 9.4h54.1l109 109c-14.7 29-10 65.4 14.3 89.6l112 112c12.5 12.5 32.8 12.5 45.3 0l64-64c12.5-12.5 12.5-32.8 0-45.3l-112-112c-24.2-24.2-60.6-29-89.6-14.3l-109-109V104c0-7.5-3.5-14.5-9.4-19L78.6 5zM19.9 396.1C7.2 408.8 0 426.1 0 444.1C0 481.6 30.4 512 67.9 512c18 0 35.3-7.2 48-19.9L233.7 374.3c-7.8-20.9-9-43.6-3.6-65.1l-61.7-61.7L19.9 396.1zM512 144c0-10.5-1.1-20.7-3.2-30.5c-2.4-11.2-16.1-14.1-24.2-6l-63.9 63.9c-3 3-7.1 4.7-11.3 4.7H352c-8.8 0-16-7.2-16-16V102.6c0-4.2 1.7-8.3 4.7-11.3l63.9-63.9c8.1-8.1 5.2-21.8-6-24.2C388.7 1.1 378.5 0 368 0C288.5 0 224 64.5 224 144l0 .8 85.3 85.3c36-9.1 75.8 .5 104 28.7L429 274.5c49-23 83-72.8 83-130.5zM56 432a24 24 0 1 1 48 0 24 24 0 1 1 -48 0z"/></svg>
+            <span> Instalação e Manutenção</span>
+           </button>
+           <button class="nav-link" id="nav-a5-tab" data-bs-toggle="tab" data-bs-target="#nav-a5" type="button" role="tab" aria-controls="nav-a5" aria-selected="false">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M512 80c0 18-14.3 34.6-38.4 48c-29.1 16.1-72.5 27.5-122.3 30.9c-3.7-1.8-7.4-3.5-11.3-5C300.6 137.4 248.2 128 192 128c-8.3 0-16.4 .2-24.5 .6l-1.1-.6C142.3 114.6 128 98 128 80c0-44.2 86-80 192-80S512 35.8 512 80zM160.7 161.1c10.2-.7 20.7-1.1 31.3-1.1c62.2 0 117.4 12.3 152.5 31.4C369.3 204.9 384 221.7 384 240c0 4-.7 7.9-2.1 11.7c-4.6 13.2-17 25.3-35 35.5c0 0 0 0 0 0c-.1 .1-.3 .1-.4 .2l0 0 0 0c-.3 .2-.6 .3-.9 .5c-35 19.4-90.8 32-153.6 32c-59.6 0-112.9-11.3-148.2-29.1c-1.9-.9-3.7-1.9-5.5-2.9C14.3 274.6 0 258 0 240c0-34.8 53.4-64.5 128-75.4c10.5-1.5 21.4-2.7 32.7-3.5zM416 240c0-21.9-10.6-39.9-24.1-53.4c28.3-4.4 54.2-11.4 76.2-20.5c16.3-6.8 31.5-15.2 43.9-25.5V176c0 19.3-16.5 37.1-43.8 50.9c-14.6 7.4-32.4 13.7-52.4 18.5c.1-1.8 .2-3.5 .2-5.3zm-32 96c0 18-14.3 34.6-38.4 48c-1.8 1-3.6 1.9-5.5 2.9C304.9 404.7 251.6 416 192 416c-62.8 0-118.6-12.6-153.6-32C14.3 370.6 0 354 0 336V300.6c12.5 10.3 27.6 18.7 43.9 25.5C83.4 342.6 135.8 352 192 352s108.6-9.4 148.1-25.9c7.8-3.2 15.3-6.9 22.4-10.9c6.1-3.4 11.8-7.2 17.2-11.2c1.5-1.1 2.9-2.3 4.3-3.4V304v5.7V336zm32 0V304 278.1c19-4.2 36.5-9.5 52.1-16c16.3-6.8 31.5-15.2 43.9-25.5V272c0 10.5-5 21-14.9 30.9c-16.3 16.3-45 29.7-81.3 38.4c.1-1.7 .2-3.5 .2-5.3zM192 448c56.2 0 108.6-9.4 148.1-25.9c16.3-6.8 31.5-15.2 43.9-25.5V432c0 44.2-86 80-192 80S0 476.2 0 432V396.6c12.5 10.3 27.6 18.7 43.9 25.5C83.4 438.6 135.8 448 192 448z"/></svg>
+            <span> Financiamento e Incentivos</span>
+           </button>
+           <button class="nav-link" id="nav-a6-tab" data-bs-toggle="tab" data-bs-target="#nav-a6" type="button" role="tab" aria-controls="nav-a6" aria-selected="false">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M96 96c0-35.3 28.7-64 64-64H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H80c-44.2 0-80-35.8-80-80V128c0-17.7 14.3-32 32-32s32 14.3 32 32V400c0 8.8 7.2 16 16 16s16-7.2 16-16V96zm64 24v80c0 13.3 10.7 24 24 24H296c13.3 0 24-10.7 24-24V120c0-13.3-10.7-24-24-24H184c-13.3 0-24 10.7-24 24zm208-8c0 8.8 7.2 16 16 16h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H384c-8.8 0-16 7.2-16 16zm0 96c0 8.8 7.2 16 16 16h48c8.8 0 16-7.2 16-16s-7.2-16-16-16H384c-8.8 0-16 7.2-16 16zM160 304c0 8.8 7.2 16 16 16H432c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16zm0 96c0 8.8 7.2 16 16 16H432c8.8 0 16-7.2 16-16s-7.2-16-16-16H176c-8.8 0-16 7.2-16 16z"/></svg>
+            <span> Notícias</span>
+           </button>
+           <button class="nav-link" id="nav-a7-tab" data-bs-toggle="tab" data-bs-target="#nav-a7" type="button" role="tab" aria-controls="nav-a7" aria-selected="false">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 640 512"><path d="M579.8 267.7c56.5-56.5 56.5-148 0-204.5c-50-50-128.8-56.5-186.3-15.4l-1.6 1.1c-14.4 10.3-17.7 30.3-7.4 44.6s30.3 17.7 44.6 7.4l1.6-1.1c32.1-22.9 76-19.3 103.8 8.6c31.5 31.5 31.5 82.5 0 114L422.3 334.8c-31.5 31.5-82.5 31.5-114 0c-27.9-27.9-31.5-71.8-8.6-103.8l1.1-1.6c10.3-14.4 6.9-34.4-7.4-44.6s-34.4-6.9-44.6 7.4l-1.1 1.6C206.5 251.2 213 330 263 380c56.5 56.5 148 56.5 204.5 0L579.8 267.7zM60.2 244.3c-56.5 56.5-56.5 148 0 204.5c50 50 128.8 56.5 186.3 15.4l1.6-1.1c14.4-10.3 17.7-30.3 7.4-44.6s-30.3-17.7-44.6-7.4l-1.6 1.1c-32.1 22.9-76 19.3-103.8-8.6C74 372 74 321 105.5 289.5L217.7 177.2c31.5-31.5 82.5-31.5 114 0c27.9 27.9 31.5 71.8 8.6 103.9l-1.1 1.6c-10.3 14.4-6.9 34.4 7.4 44.6s34.4 6.9 44.6-7.4l1.1-1.6C433.5 260.8 427 182 377 132c-56.5-56.5-148-56.5-204.5 0L60.2 244.3z"/></svg>
+            <span> Links úteis</span>
+           </button>
+         </div>
+       </nav>
+
+     </div>
+     <!-- início da estrutura de abas  -->
+    <div class="tab-content" id="myTabContent">
+        <!-- conteúdo de energia solar e benefícios  -->
+        <div class="container tab-pane fade show active" id="nav-a1" role="tabpanel" aria-labelledby="nav-a1-tab" display="none">
+         <br>
+         <h2 style="text-align:center">O que é Energia Solar?</h2>
+         <br>
+         <textarea class="centered-textarea" rows="7" cols="100">
+          Energia solar é a energia obtida a partir da luz do sol. Ela é capturada usando painéis solares, que convertem a luz solar em eletricidade ou calor para uso em residências, empresas e indústrias. É uma fonte de energia limpa e renovável, pois o sol é uma fonte inesgotável de energia. A energia solar ajuda a reduzir a dependência de combustíveis fósseis e contribui para a redução da emissão de poluentes, sendo uma opção sustentável para suprir nossas necessidades energéticas.
+          </textarea>
+          <div>
+            <img src="assets/casa_pl_solares.jpg" alt="imagem energia solar" width="350" height="240" style="display: block; margin: 0 auto;">
+            <br>
+            <br>
+          </div>
+         <h2 style="text-align:center">Quais são os benefícios?</h2>
+         <br>
+         <div class="info-box">
+          <ul>
+           <li>Sustentabilidade: É uma fonte de energia renovável, o sol é inesgotável</li>
+           <li>Redução de custos: Pode reduzir as contas de eletricidade a longo prazo</li>
+           <li>Baixa manutenção: Requer pouca manutenção ao longo do tempo</li>
+           <li>Ambientalmente amigável: Ajuda a reduzir a emissão de poluentes e combate as mudanças climáticas</li>
+           <li>Independência energética: Permite que as pessoas gerem sua própria eletricidade</li>
+           <li>Valorização imobiliária: Pode aumentar o valor de propriedade</li>
+           <li>Incentivos fiscais: Muitos lugares oferecem incentivos para instalação de painéis solares</li>
+           <li>Esses benefícios tornam a energia solar uma escolha atraente para muitos</li>
+          </ul>
+         </div>
+        </div>
+        <!-- conteúdo de gereção distribuída de energia  -->
+        <div class="container tab-pane fade" id="nav-a2" role="tabpanel" aria-labelledby="nav-a2-tab">
+         <br>
+           <h2 style="text-align:center">O que é Geração Distribuída?</h2>
+           <br>
+           <textarea class="centered-textarea" rows="5" cols="85">
+            A geração distribuída é quando você produz sua própria energia elétrica localmente, geralmente usando painéis solares ou outras fontes renováveis, em vez de depender totalmente de uma central elétrica distante. É como ter sua mini usina elétrica em casa ou em seu negócio para economizar energia e contribuir para um ambiente mais sustentável.            
+           </textarea>
+           <img src="assets/image.jpg" alt="Imagem casa pl solar" width="590" height="450" style="display: block; margin: 0 auto;">
+           <br>
+           <br>
+           <h2 style="text-align:center">Geração e Consumo, como funciona?</h2>
+           <br>
+           <textarea class="centered-textarea" rows="4" cols="85">
+            A mini geração permite que você produza sua própria energia, economize dinheiro e, em condições ideais, até mesmo alcance um desconto de até 95% na conta de luz, tornando sua energia mais acessível e amigável ao meio ambiente.
+           </textarea>
+           <div class="info-box">
+            <ul>
+              <li><strong>Mini Geração:</strong> Você instala painéis solares (ou outra fonte de energia renovável) em sua casa ou empresa para gerar eletricidade.</li>
+              <li><strong>Consumo Próprio:</strong> A eletricidade gerada é usada para alimentar suas necessidades de energia, como iluminação e aparelhos, antes de comprar eletricidade da rede elétrica.</li>
+              <li><strong>Alimentação na Rede Elétrica:</strong> Se você produz mais eletricidade do que consome, o excesso é enviado de volta para a rede elétrica local.</li>
+              <li><strong>Créditos na Conta de Luz:</strong> Quando você envia excesso de eletricidade para a rede, muitas vezes recebe créditos em sua conta de luz. Esses créditos podem ser usados para compensar sua conta em meses em que sua produção é menor do que o consumo.</li>
+              <li><strong>Desconto na Conta de Luz:</strong> Com um sistema eficiente e condições favoráveis, você pode reduzir sua conta de luz em até 95% ou até mesmo eliminá-la completamente. Isso ocorre quando sua produção de eletricidade cobre totalmente o seu consumo, e os créditos acumulados nos meses ensolarados compensam os meses nublados ou de maior consumo.</li>
+            </ul>
+           </div>
+        </div>
+        <!-- conteúdo do cálculo do sistema solar  -->
+        <div class="container tab-pane fade" id="nav-a3" role="tabpanel" aria-labelledby="nav-a3-tab">
+          <br>
+          <h2 style="text-align:center">Cálculo do sistema Solar para sua casa</h2>
+          <br>
+          <textarea class="centered-textarea" rows="9" cols="100">
+           O cálculo do sistema solar é composto com os dados iniciais: "Consumo Médio Mensal"(kWh) da casa, a "Irradiação Solar Média" em Wh/m² da média estadual onde fica a residência conforme tabela abaixo e "Potência de Placas Solares" em Wp conforme disponível no mercado. Os dados de saída do cálculo são: "Capacidade do Sistema Solar (kWp)" que é a potência que a casa necessita, "Números de Placas Necessárias" para instalação no telhado da casa, "Sistema escolhido (kWp)" no qual potência comercial que será adquirida e "Custo estimado médio do Sistema para o consumidor final em R$" com base no dados do gráfico no final da página. 
+           </textarea>
+           <img src="assets/media_irradiacao_uf.jpg" alt="imagem tabela media irrad" width="765" height="286" style="display: block; margin: 0 auto;">
+           <br>
+           <app-solar-calculator></app-solar-calculator>
+           <br>
+           <img src="assets/custo_sist_fv.jpg" alt="imagem grafico custo sist fv" width="901" height="500" style="display: block; margin: 0 auto;">
+        </div>
+
+        <!-- conteúdo de instalação e manutenção  -->
+        <div class="container tab-pane fade" id="nav-a4" role="tabpanel" aria-labelledby="nav-a4-tab">
+         <br>
+         <h2 style="text-align:center">Dicas de Instalação, Manutenção e Cuidados</h2>
+         <br>
+         <h2 style="text-align:center">Instalação</h2>
+         <br>
+         <textarea class="centered-textarea" rows="6" cols="100">
+          A instalação de um sistema de painéis solares residencial é uma decisão importante para reduzir os custos de energia e adotar uma fonte limpa de eletricidade. No entanto, é crucial lembrar que essa instalação deve ser realizada por um profissional qualificado. Neste guia, vamos explorar os aspectos fundamentais desse processo, destacando a importância de contar com um técnico experiente para garantir a segurança e eficiência do seu sistema.
+         </textarea>
+         <div class="info-box">
+          <ul>
+            <li><strong>Escolha do local:</strong> O primeiro passo é escolher um local adequado no telhado ou terreno, que receba boa exposição ao sol durante a maior parte do dia, geralmente voltado para o sul. É importante verificar se não há sombreamento significativo, como árvores ou prédios.</li>
+            <li><strong>Montagem dos painéis:</strong> Os painéis solares são fixados no local escolhido, seja no telhado ou em suportes no terreno. Eles devem ser instalados de forma segura e estável.</li>
+            <li><strong>Conexões elétricas:</strong> Os painéis são interligados e conectados a um inversor solar. O inversor converte a corrente contínua (CC) gerada pelos painéis em corrente alternada (CA), que é usada em residências. A instalação elétrica é realizada por um eletricista qualificado.</li>
+            <li><strong>Conexão à rede elétrica:</strong> A saída do inversor é conectada ao quadro de distribuição elétrica da casa. Isso permite que a eletricidade gerada pelos painéis seja usada diretamente ou, se houver excedente, enviada de volta à rede elétrica.</li>
+            <li><strong>Permissões e autorizações:</strong> Em muitas áreas, é necessário obter permissões e autorizações locais antes de instalar um sistema solar. Certifique-se de cumprir todos os requisitos legais.</li>
+          </ul>
+         </div>
+         <br>
+         <h2 style="text-align:center">Manutenção</h2>
+         <br>
+         <textarea class="centered-textarea" rows="6" cols="100">
+            A manutenção adequada de um sistema de painéis solares residenciais é essencial para garantir o desempenho ideal e a longevidade do investimento em energia solar. Neste tópico, exploraremos os passos simples que os proprietários podem seguir para manter seus painéis solares funcionando eficientemente, economizando dinheiro e contribuindo para um ambiente mais sustentável.
+         </textarea>
+         <div class="info-box">
+          <ul>
+            <li><strong>Limpeza:</strong> O primeiro passo é escolher um local adequado no telhado ou terreno, que receba boa exposição ao sol durante a maior parte do dia, geralmente voltado para o sul. É importante verificar se não há sombreamento significativo, como árvores ou prédios.</li>
+            <li><strong>Verificação regular: </strong> Os painéis solares são fixados no local escolhido, seja no telhado ou em suportes no terreno. Eles devem ser instalados de forma segura e estável.</li>
+            <li><strong>Monitoramento do desempenho:</strong> Os painéis são interligados e conectados a um inversor solar. O inversor converte a corrente contínua (CC) gerada pelos painéis em corrente alternada (CA), que é usada em residências. A instalação elétrica é realizada por um eletricista qualificado.</li>
+          </ul>
+         </div>
+         <br>
+         <h2 style="text-align:center">Cuidados</h2>
+         <br>
+         <textarea class="centered-textarea" rows="5" cols="100">
+          Os cuidados regulares com um sistema de painéis solares residenciais são cruciais para assegurar um funcionamento confiável e eficiente ao longo do tempo. Neste tópico, discutiremos as práticas simples que os proprietários podem adotar para preservar a eficiência e prolongar a vida útil de seus painéis solares, promovendo assim a sustentabilidade e economia de energia.  
+         </textarea>
+         <div class="info-box">
+          <ul>
+            <li><strong>Limpeza regular: </strong> Mantenha os painéis limpos para garantir a eficiência do sistema. A sujeira pode reduzir a captação de luz solar.</li>
+            <li><strong>Proteção contra raios: </strong> Considere a instalação de um sistema de proteção contra raios para evitar danos aos painéis e ao inversor em caso de tempestades elétricas.</li>
+            <li><strong>Poda de árvores: </strong> Se necessário, faça a poda de árvores que possam criar sombreamento sobre os painéis.</li>
+          </ul>
+         </div>
+        </div>
+      
+        <!-- conteúdo de Financiamentos e Incentivos -->
+        <div class="container tab-pane fade" id="nav-a5" role="tabpanel" aria-labelledby="nav-a5-tab">
+          <br>
+          <h2 style="text-align:center">Financiamentos e Incentivos para aquisição de um sistema de energia solar</h2>
+          <br>
+          <textarea  class="centered-textarea" rows="5"cols="100">
+            No Brasil, existem alguns programas e incentivos que visam facilitar o acesso à energia solar residencial para famílias de baixa renda. A energia solar é uma fonte limpa e sustentável de energia, que pode reduzir significativamente os custos de eletricidade a longo prazo, tornando-a uma opção atraente para comunidades de baixa renda. Aqui estão algumas iniciativas e políticas relevantes:
+          </textarea>
+          <div class="info-box">
+           <ul>
+             <li><strong>Programa Nacional de Universalização do Acesso e Uso da Energia Elétrica (Luz para Todos):</strong>
+              <br>
+              Este programa do governo federal busca levar eletricidade para áreas rurais e comunidades de baixa renda que ainda não têm acesso à rede elétrica. Ele inclui a instalação de sistemas de energia solar em regiões remotas e desassistidas, permitindo que famílias de baixa renda tenham acesso à eletricidade limpa e confiável.</li>
+             <li><strong>Financiamento através do Banco Nacional de Desenvolvimento Econômico e Social (BNDES):</strong>
+              <br>
+              O BNDES oferece linhas de crédito com condições especiais para a instalação de sistemas de energia solar residencial. Essas linhas de financiamento podem ter taxas de juros mais baixas e prazos estendidos, tornando a energia solar mais acessível para famílias de baixa renda.</li>
+             <li><strong>Isenção de Impostos:</strong> Alguns estados brasileiros oferecem isenções fiscais para a compra de equipamentos de energia solar, como painéis solares e inversores. Isso reduz os custos iniciais de instalação e torna a energia solar mais acessível para todas as faixas de renda.</li>
+             <li><strong>Programa de Eficiência Energética (PEE):</strong> As distribuidoras de energia elétrica são obrigadas a investir uma parte de sua receita em programas de eficiência energética. Isso inclui a promoção de fontes de energia renovável, como a energia solar, que pode ser direcionada para projetos de baixa renda.</li>
+             <li><strong>Programas Municipais e Estaduais:</strong> Alguns municípios e estados brasileiros também oferecem programas e incentivos locais para a instalação de energia solar residencial, muitas vezes em parceria com instituições financeiras e empresas de energia.</li>
+             <li><strong>Cooperativas de Energia Solar:</strong> Em algumas regiões do Brasil, têm surgido cooperativas de energia solar, onde várias famílias de baixa renda se unem para instalar sistemas solares compartilhados. Isso permite que eles compartilhem os custos e os benefícios da energia solar.</li>
+           </ul>
+          </div>
+          <br>
+          <textarea  class="centered-textarea" rows="12" cols="100">
+           É importante destacar que, embora essas iniciativas e incentivos estejam disponíveis, ainda existem desafios para expandir o acesso à energia solar para famílias de baixa renda no Brasil. Os custos iniciais de instalação podem ser um obstáculo, mesmo com financiamentos favoráveis. Além disso, é necessária uma educação contínua sobre os benefícios da energia solar e sobre como operar e manter esses sistemas.
+           No entanto, a energia solar residencial é uma opção promissora para reduzir os custos de energia a longo prazo e ajudar as famílias de baixa renda a terem acesso a uma fonte de energia limpa e sustentável. A combinação de políticas governamentais, incentivos financeiros e conscientização pode contribuir para tornar a energia solar mais acessível e amplamente adotada por essas comunidades.
+          </textarea>
+        </div>
+
+        <!-- conteúdo de Notícias -->
+        <div class="container tab-pane fade" id="nav-a6" role="tabpanel" aria-labelledby="nav-a6-tab">
+          <br>
+          <h2 style="text-align:left">Notícias:</h2>
+          <br>
+          <div class="noticia">
+            <h2><a class="titulo-link" href="https://g1.globo.com/globonews/cidades-e-solucoes/noticia/2023/07/13/modulo-de-2a-vida-placas-fotovoltaicas-sao-restauradas-e-oferecidas-a-comunidades-de-baixa-renda.ghtml" target="_blank">Módulo de 2ª vida: placas fotovoltaicas são restauradas e oferecidas a comunidades de baixa renda (13/07/2023)</a></h2>
+            <p>A Universidade Federal de Santa Catarina tem um laboratório desde 1997 dedicado à energia solar e reutiliza placas fotovoltaicas antigas para comunidades de baixa renda. Essas placas são inspecionadas e, se viáveis, reinstaladas em postes de iluminação pública, promovendo o uso sustentável da energia solar. A eficiência depende de sua condição inicial.</p>
+            <p>Fonte: GloboNews</p>
+          </div>
+          <div class="noticia">
+            <h2><a class="titulo-link" href="https://www.camara.leg.br/noticias/941209-projeto-garante-energia-fotovoltaica-para-familias-que-recebem-o-bpc" target="_blank">Projeto garante energia fotovoltaica para famílias que recebem o BPC (02/03/2023)</a></h2>
+            <p>O Projeto de Lei 624/23 propõe instalar energia fotovoltaica em residências de beneficiários do BPC, por meio do Programa de Energia Renovável Social. No entanto, os beneficiários perderiam o direito à Tarifa Social de Energia, que oferece descontos na conta de luz. O autor, deputado Domingos Neto, destaca os benefícios econômicos e sustentáveis da energia solar, incluindo economia na conta de energia e geração de empregos. O projeto aguarda análise nas comissões da Câmara dos Deputados.</p>
+            <p>Fonte: Agência Câmara de Notícias</p>
+          </div>
+          <div class="noticia">
+            <h2><a class="titulo-link" href="https://www.infomoney.com.br/consumo/governo-estuda-programa-de-energia-solar-para-populacao-de-baixa-renda" target="_blank">Governo estuda programa de energia solar para população de baixa renda (08/01/2023)</a></h2>
+            <p>O governo planeja um programa para facilitar o acesso à energia solar, principalmente para populações vulneráveis, visando a implementação em 100 dias. O programa incluiria linhas de crédito com juros baixos e foco em escolas, postos de saúde, comunidades carentes e agricultura familiar.</p>
+            <p>Fonte: Grupo Estado</p>
+          </div>
+        </div>
+
+        <!-- conteúdo de Links úteis -->
+        <div class="container tab-pane fade" id="nav-a7" role="tabpanel" aria-labelledby="nav-a7-tab">
+          <br>
+          <h2 style="text-align:left">Endereços de sites úteis sobre energia solar:</h2>
+          <div class="card-container">
+            <a class="card" target="_blank" rel="noopener" href="https://www.absolar.org.br"><strong>Associação Brasileira de Energia Solar Fotovoltaica (ABSOLAR)</strong></a>
+            <a class="card" target="_blank" rel="noopener" href="https://www.portalsolar.com.br"><strong>Portal Solar: plataforma brasileira dedicada a energia solar residencial</strong></a>
+            <a class="card" target="_blank" rel="noopener" href="https://www.portalsolar.com.br/sistema-fotovoltaico-guia-completo"><strong>Sistema Voltaico: Guia Completo</strong></a>
+            <a class="card" target="_blank" rel="noopener" href="https://institutoideal.org/"><strong>Instituto para o Desenvolvimento de Energias Alternativas na América latina (IDEAL)</strong></a>
+          </div>
+        </div>
+    </div>
+</body>
+ <router-outlet></router-outlet>
+ 
